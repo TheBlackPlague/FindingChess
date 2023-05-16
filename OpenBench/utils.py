@@ -160,7 +160,7 @@ def getBranch(request, errors, name):
 
     # Avoid leaking our credentials to other sites
     if not target.startswith('https://api.github.com/'):
-        errors.append('OpenBench may only reach Github\'s API')
+        errors.append('Finding Chess may only reach Github\'s API')
         return (None, None, None, None)
 
     # Check for a (User, Token) credentials file

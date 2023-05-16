@@ -1,6 +1,6 @@
 import requests
 
-URL      = 'http://chess.grantnet.us/scripts/'
+URL      = 'http://findingchess.shaheryarsohail.com/scripts/'
 FILENAME = ''
 
 data = {

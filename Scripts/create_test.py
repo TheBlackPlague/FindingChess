@@ -8,7 +8,7 @@ import requests
 # Networks must be assigned using their SHA256, not their name
 # Networks with the value '' are used for tests without Networks
 
-URL = 'http://chess.grantnet.us/scripts/'
+URL = 'http://findingchess.shaheryarsohail.com/scripts/'
 
 data = {
 

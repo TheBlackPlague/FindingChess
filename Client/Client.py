@@ -55,16 +55,8 @@ BASE_GAMES_PER_CORE = 32    # Typical games played per-thread
 FLEET_MODE          = False # Exit when there are no workloads
 
 CUSTOM_SETTINGS = {
-    'Ethereal'    : [], 'Laser'     : [],
-    'Weiss'       : [], 'Demolito'  : [],
-    'Rubichess'   : [], 'FabChess'  : [],
-    'Igel'        : [], 'Winter'    : [],
-    'Halogen'     : [], 'Stash'     : [],
-    'Seer'        : [], 'Koivisto'  : [],
-    'Drofa'       : [], 'Bit-Genie' : [],
-    'Berserk'     : [], 'Zahak'     : [],
-    'BlackMarlin' : [],
-};
+    'StockDory'    : []
+}
 
 ERRORS = {
     'cutechess'    : 'Unable to fetch Cutechess location and download it!',
@@ -879,10 +871,10 @@ def run_and_parse_cutechess(arguments, workload, concurrency, update_interval, c
 
 if __name__ == '__main__':
 
-    req_user  = required=('OPENBENCH_USERNAME' not in os.environ)
-    req_pass  = required=('OPENBENCH_PASSWORD' not in os.environ)
-    help_user = 'Username. May also be passed as OPENBENCH_USERNAME environment variable'
-    help_pass = 'Password. May also be passed as OPENBENCH_PASSWORD environment variable'
+    req_user  = required=('FINDING_CHESS_USERNAME' not in os.environ)
+    req_pass  = required=('FINDING_CHESS_PASSWORD' not in os.environ)
+    help_user = 'Username. May also be passed as FINDING_CHESS_USERNAME environment variable'
+    help_pass = 'Password. May also be passed as FINDING_CHESS_PASSWORD environment variable'
 
     p = argparse.ArgumentParser()
     p.add_argument('-U', '--username', help=help_user  , required=req_user)
@@ -895,10 +887,10 @@ if __name__ == '__main__':
     arguments = p.parse_args()
 
     if arguments.username is None:
-        arguments.username = os.environ['OPENBENCH_USERNAME']
+        arguments.username = os.environ['FINDING_CHESS_USERNAME']
 
     if arguments.password is None:
-        arguments.password = os.environ['OPENBENCH_PASSWORD']
+        arguments.password = os.environ['FINDING_CHESS_PASSWORD']
 
     if arguments.syzygy is not None:
         SYZYGY_WDL_PATH = arguments.syzygy
