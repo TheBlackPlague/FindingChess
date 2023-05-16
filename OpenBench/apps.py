@@ -21,4 +21,4 @@
 import django.apps
 
 class OpenbenchConfig(django.apps.AppConfig):
-    name = 'FindingChess'
+    name = 'OpenBench'
