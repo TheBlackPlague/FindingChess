@@ -13,9 +13,9 @@ from bench_engine import run_benchmark
 from OpenBench.config import OPENBENCH_CONFIG
 
 USE_OLD_BINARIES   = True
-OPENBENCH_USERNAME = None
-OPENBENCH_PASSWORD = None
-OPENBENCH_SERVER   = 'http://chess.grantnet.us'
+FINDING_CHESS_USERNAME = None
+FINDING_CHESS_PASSWORD = None
+OPENBENCH_SERVER   = 'http://findingchess.shaheryarsohail.com'
 BENCHMARK_THREADS  = None
 BENCHMARK_SETS     = None
 
@@ -29,7 +29,7 @@ def download_network(engine, sha256):
         print ('Downloading %s for %s...' % (sha256, engine))
 
         target = '%s/clientGetNetwork/%s/' % (OPENBENCH_SERVER, sha256)
-        payload = { 'username' : OPENBENCH_USERNAME, 'password' : OPENBENCH_PASSWORD }
+        payload = { 'username' : FINDING_CHESS_USERNAME, 'password' : FINDING_CHESS_PASSWORD}
         request = requests.post(data=payload, url=target)
 
         with open('Networks/%s' % (sha256), 'wb') as fout:
@@ -114,10 +114,10 @@ def bench_built_engines():
 
 if __name__ == '__main__':
 
-    req_user  = required=('OPENBENCH_USERNAME' not in os.environ)
-    req_pass  = required=('OPENBENCH_PASSWORD' not in os.environ)
-    help_user = 'Username. May also be passed as OPENBENCH_USERNAME environment variable'
-    help_pass = 'Password. May also be passed as OPENBENCH_PASSWORD environment variable'
+    req_user  = required=('FINDING_CHESS_USERNAME' not in os.environ)
+    req_pass  = required=('FINDING_CHESS_PASSWORD' not in os.environ)
+    help_user = 'Username. May also be passed as FINDING_CHESS_USERNAME environment variable'
+    help_pass = 'Password. May also be passed as FINDING_CHESS_PASSWORD environment variable'
 
     p = argparse.ArgumentParser()
     p.add_argument('-U', '--username', help=help_user, required=req_user)
@@ -128,13 +128,13 @@ if __name__ == '__main__':
     arguments = p.parse_args()
 
     USE_OLD_BINARIES   = not arguments.rebuild
-    OPENBENCH_USERNAME = arguments.username
-    OPENBENCH_PASSWORD = arguments.password
+    FINDING_CHESS_USERNAME = arguments.username
+    FINDING_CHESS_PASSWORD = arguments.password
     BENCHMARK_THREADS  = int(arguments.threads)
     BENCHMARK_SETS     = int(arguments.sets)
 
-    if arguments.username is None: OPENBENCH_USERNAME = os.environ['OPENBENCH_USERNAME']
-    if arguments.password is None: OPENBENCH_PASSWORD = os.environ['OPENBENCH_PASSWORD']
+    if arguments.username is None: FINDING_CHESS_USERNAME = os.environ['FINDING_CHESS_USERNAME']
+    if arguments.password is None: FINDING_CHESS_PASSWORD = os.environ['FINDING_CHESS_PASSWORD']
 
     build_all_engines()
     bench_built_engines()
