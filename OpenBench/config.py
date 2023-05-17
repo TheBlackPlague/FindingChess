@@ -70,7 +70,7 @@ OPENBENCH_CONFIG = {
 
             'build' : {
                 'path': '',
-                'compilers': ['clang>=16.0.0'],
+                'compilers': ['clang'],
                 'cpuflags': ['popcnt']
             },
 
