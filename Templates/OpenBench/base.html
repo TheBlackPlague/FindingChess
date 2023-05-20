@@ -107,7 +107,7 @@
 
                 <ul>
                     <li class="header">Engines</li>
-                    {% for engine, data in config.engines.items|dictsort:"0.lower" %}
+                    {% for engine, data in config.engines.items %}
                         <li><a href="{{data.source}}" target="_blank" rel="noopener noreferrer">{{engine}}</a></li>
                     {% endfor %}
                 </ul>
