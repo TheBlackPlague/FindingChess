@@ -10,7 +10,7 @@
             {
                 'default' : "{{network.default}}",
                 'engine'  : "{{network.engine}}",
-                'author'  : "{{network.author|capfirst}}",
+                'author'  : "{{network.author}}",
                 'name'    : "{{network.name}}",
                 'hash'    : "{{network.sha256}}",
             },
@@ -70,19 +70,19 @@
             <tr>
 
                 {% if network.default %}
-                    <td><i class="fas fa-star" aria-hidden="true"></i></td>
+                    <td><i class="fa-regular fa-square-check" aria-hidden="true"></i></td>
                 {% else %}
                     <td><a class="unstarred" href="/networks/default/{{network.sha256}}">
-                    <i class="far fa-star" aria-hidden="true"></i></a></td>
+                    <i class="fa-regular fa-square" aria-hidden="true"></i></a></td>
                 {% endif %}
 
                 <td><a href="/networks/{{network.engine}}/">{{network.engine}}</a></td>
-                <td><a href="/user/{{network.author}}">{{network.author|capfirst}}</a></td>
+                <td><a href="/user/{{network.author}}">{{network.author}}</a></td>
                 <td><a href="/networks/download/{{network.sha256}}">{{network.name}}</a></td>
                 <td>{{network.sha256}}</td>
 
-                <td><a class="redlink" onclick="return confirm('YOU ARE DELETING THIS NETWORK FILE FOREVER')" href="/networks/delete/{{network.sha256}}">
-                <i class="fas fa-minus-circle"></i></a></td>
+                <td><a class="redlink" onclick="return confirm('You are deleting this network file forever. Are you sure you want to proceed?')" href="/networks/delete/{{network.sha256}}">
+                <i class="fa-solid fa-trash-can"></i></a></td>
             </tr>
         {% endfor %}
 
