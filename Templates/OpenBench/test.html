@@ -20,7 +20,7 @@
             {% if test.devnetwork %}
             <tr>
                 <th>Dev Network</th>
-                <td><a href="{{test.devnetwork|resolveNetworkURL}}">{{test.devnetname}}</td>
+                <td><a href="{{test.devnetwork|resolveNetworkURL}}" target="_blank" rel="noopener noreferrer">{{test.devnetname}}</td>
             </tr>
             {% endif %}
             <tr><th>Base Branch</th><td>{{test.base.name|prettyName}}</td></tr>
@@ -30,11 +30,11 @@
             {% if test.basenetwork %}
             <tr>
                 <th>Base Network</th>
-                <td><a href="{{test.basenetwork|resolveNetworkURL}}">{{test.basenetname}}</td>
+                <td><a href="{{test.basenetwork|resolveNetworkURL}}" target="_blank" rel="noopener noreferrer">{{test.basenetname}}</td>
             </tr>
             {% endif %}
-            <tr><th>Source Repo</th><td><a href="{{test.source}}">{{test.source}}</a></td></tr>
-            <tr><th>Opening Book</th><td><a href="{{config.framework}}/raw/master/Books/">{{test.bookname}}</a></td></tr>
+            <tr><th>Source Repo</th><td><a href="{{test.source}}" target="_blank" rel="noopener noreferrer">{{test.source}}</a></td></tr>
+            <tr><th>Opening Book</th><td><a href="{{config.framework}}/raw/master/Books/" target="_blank" rel="noopener noreferrer">{{test.bookname}}</a></td></tr>
 
             <tr><th>Syzygy ADJ</th><td>{{test.syzygy_adj}}</td></tr>
             <tr><th>Syzygy WDL</th><td>{{test.syzygy_wdl}}</td></tr>
@@ -44,7 +44,7 @@
     <div id="actions">
 
         <!-- Dev vs Base [Git Diff Link] -->
-        <h4><a href="{{test|gitDiffLink}}">
+        <h4><a href="{{test|gitDiffLink}}" target="_blank" rel="noopener noreferrer">
             {{test.dev.name|prettyName}} vs {{test.base.name|prettyName}}
         </a></h4>
 
