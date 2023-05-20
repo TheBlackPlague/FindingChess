@@ -868,34 +868,65 @@ def run_and_parse_cutechess(arguments, workload, concurrency, update_interval, c
 #                                                                           #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-if __name__ == '__main__':
+from multiprocessing import cpu_count
 
-    req_user  = required=('FINDING_CHESS_USERNAME' not in os.environ)
-    req_pass  = required=('FINDING_CHESS_PASSWORD' not in os.environ)
-    help_user = 'Username. May also be passed as FINDING_CHESS_USERNAME environment variable'
-    help_pass = 'Password. May also be passed as FINDING_CHESS_PASSWORD environment variable'
+def thread_count():
+    if IS_LINUX:
+        if os.path.isfile("/sys/fs/cgroup/cpu/cpu.cfs_quota_us") and os.path.isfile("/sys/fs/cgroup/cpu/cpu.cfs_period_us"):
+            with open("/sys/fs/cgroup/cpu/cpu.cfs_quota_us") as fp:
+                cfs_quota_us = int(fp.read())
+
+            with open("/sys/fs/cgroup/cpu/cpu.cfs_period_us") as fp:
+                cfs_period_us = int(fp.read())
+
+            container_cpus = cfs_quota_us // cfs_period_us
+            cpus = cpu_count() if container_cpus < 1 else container_cpus
+            return cpus
+
+        elif os.path.isfile("/sys/fs/cgroup/cpu.max"):
+            with open("/sys/fs/cgroup/cpu.max") as fp:
+                data = fp.read().split(' ')
+                data[-1] = data[-1].strip()
+                cfs_quota_us = int(data[0])
+                cfs_period_us = int(data[1])
+
+            container_cpus = cfs_quota_us // cfs_period_us
+            cpus = cpu_count() if container_cpus < 1 else container_cpus
+            return cpus
+
+        else:
+            return multiprocessing.cpu_count()
+
+    else:
+        return multiprocessing.cpu_count()
+
+
+if __name__ == '__main__':
+    help_user = 'FINDING_CHESS_USERNAME environment variable'
+    help_pass = 'FINDING_CHESS_PASSWORD environment variable'
 
     p = argparse.ArgumentParser()
-    p.add_argument('-U', '--username', help=help_user  , required=req_user)
-    p.add_argument('-P', '--password', help=help_pass  , required=req_pass)
+    p.add_argument('-U', '--username', help=help_user  , required=True)
+    p.add_argument('-P', '--password', help=help_pass  , required=True)
     p.add_argument('-S', '--server'  , help='Webserver', required=True)
-    p.add_argument('-T', '--threads' , help='Threads'  , required=True)
+    p.add_argument('-T', '--threads' , help='Threads'  , required=False)
     p.add_argument('--syzygy', help='Syzygy WDL'  , required=False)
     p.add_argument('--fleet' , help='Fleet Mode'  , action='store_true')
     p.add_argument('--proxy' , help='Github Proxy', action='store_true')
+    print("Parsing arguments...")
     arguments = p.parse_args()
 
-    if arguments.username is None:
-        arguments.username = os.environ['FINDING_CHESS_USERNAME']
-
-    if arguments.password is None:
-        arguments.password = os.environ['FINDING_CHESS_PASSWORD']
+    if arguments.threads is None:
+        print("Calculating Thread Count...")
+        arguments.threads = thread_count() - 1
 
     if arguments.syzygy is not None:
         SYZYGY_WDL_PATH = arguments.syzygy
 
     if arguments.fleet:
         FLEET_MODE = True
+
+    print("Argument parsing done... Starting up client: ")
 
     check_for_utilities()
     init_client(arguments)
