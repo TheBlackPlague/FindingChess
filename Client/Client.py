@@ -101,7 +101,7 @@ def locate_utility(util, force_exit=True, report_error=True):
 def check_for_utilities():
 
     print('\nScanning For Basic Utilities...')
-    for utility in ['gcc', 'make']:
+    for utility in ['clang', 'make']:
         locate_utility(utility)
 
 
@@ -428,13 +428,13 @@ def server_configure_worker(arguments):
 
     print('\nScanning for CPU Flags...')
 
-    # Use GCC -march=native to find CPU info
+    # Use Clang -march=native to find CPU info
     stdout, stderr = Popen(
-        'echo | gcc -march=native -E -dM -',
+        'echo | clang -march=native -E -dM -',
         stdout=PIPE, shell=True
     ).communicate()
 
-    # Check for each requested flag using the gcc dump
+    # Check for each requested flag using the Clang dump
     desired = [info['cpuflags'] for engine, info in data.items()]
     flags   = set(sum(desired, [])) # Trick to flatten the list
     actual  = set(f for f in flags if '__%s__ 1' % (f) in str(stdout))
