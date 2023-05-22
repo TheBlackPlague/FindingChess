@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install -y \
     software-properties-common \
     gnupg \
     tar \
-    golang-go
+    golang-go \
+    ninja-build
 
 # Download and run the llvm.sh script to install Clang 16.0
 RUN wget https://apt.llvm.org/llvm.sh && \
