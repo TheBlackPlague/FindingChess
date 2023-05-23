@@ -18,21 +18,27 @@ RUN apt-get update && apt-get install -y \
     software-properties-common \
     gnupg \
     tar \
-    golang-go \
     ninja-build
 
 # Download and run the llvm.sh script to install Clang 16.0
 RUN wget https://apt.llvm.org/llvm.sh && \
     chmod +x llvm.sh && \
-    ./llvm.sh 16
+    ./llvm.sh 16 && \
+    rm -rf llvm.sh
 
 # Create symbolic links to use clang-16 and clang++-16 as clang and clang++
 RUN ln -s /usr/bin/clang-16 /usr/bin/clang && \
     ln -s /usr/bin/clang++-16 /usr/bin/clang++
 
+# Download and Install Golang
+RUN wget https://go.dev/dl/go1.20.4.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.20.4.linux-amd64.tar.gz && \
+    rm -rf go1.20.4.linux-amd64.tar.gz
+
 # Mark the Environment Variables CC and CXX to clang and clang++.
 ENV CC clang
 ENV CXX clang++
+ENV PATH $PATH:/usr/local/go/bin
 
 # Make sure the Python dependencies are met
 RUN python3 -m pip install pip --upgrade &&  \
