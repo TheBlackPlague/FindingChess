@@ -88,7 +88,7 @@ OPENBENCH_CONFIG = {
 
         'Mess' : {
 
-            'nps'    : 2200000,
+            'nps'    : 800000,
             'base'   : 'master',
             'book'   : 'UHO_XXL_+0.90_+1.19.epd',
             'bounds' : '[0.00, 5.00]',
