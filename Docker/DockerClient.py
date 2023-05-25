@@ -51,7 +51,7 @@ TIMEOUT_WORKLOAD    = 30    # Timeout in seconds between workload requests
 CLIENT_VERSION      = '4'   # Client version to send to the Server
 
 SYZYGY_WDL_PATH     = None  # Pathway to WDL Syzygy Tables
-BASE_GAMES_PER_CORE = 32    # Typical games played per-thread
+BASE_GAMES_PER_CORE = 10    # Typical games played per-thread
 FLEET_MODE          = False # Exit when there are no workloads
 
 CUSTOM_SETTINGS = {
@@ -778,7 +778,7 @@ def build_cutechess_command(arguments, workload, dev_name, base_name, nps):
     book_name = workload['test']['book']['name']
     variant   = ['standard', 'fischerandom']['FRC' in book_name.upper()]
 
-    flags  = '-repeat -recover '
+    flags  = '-repeat -recover -resign %s -draw %s '
     flags += '-srand %d -variant %s -concurrency %d -games %d '
     flags += '-engine dir=Engines/ cmd=./%s proto=uci %s%s name=%s '
     flags += '-engine dir=Engines/ cmd=./%s proto=uci %s%s name=%s '
@@ -797,6 +797,7 @@ def build_cutechess_command(arguments, workload, dev_name, base_name, nps):
     time_control = scale_time_control(workload, nps)
 
     args = (
+        'movecount=3 score=400', 'movenumber=40 movecount=8 score=10',
         int(time.time()), variant, concurrency, games,
         dev_name, time_control, dev_options, dev_name.rstrip('.exe'),
         base_name, time_control, base_options, base_name.rstrip('.exe'),
