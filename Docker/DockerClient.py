@@ -919,7 +919,7 @@ if __name__ == '__main__':
 
     if arguments.threads is None:
         print("Calculating Thread Count...")
-        arguments.threads = thread_count() - 1
+        arguments.threads = int(thread_count() * (1.55 / 2))
 
     if arguments.syzygy is not None:
         SYZYGY_WDL_PATH = arguments.syzygy
