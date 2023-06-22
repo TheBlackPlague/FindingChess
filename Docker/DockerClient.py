@@ -23,6 +23,8 @@ import hashlib
 import os
 import platform
 import re
+import stat
+
 import requests
 import sys
 import time
@@ -719,16 +721,20 @@ def download_engine(arguments, workload, branch, network):
     compiler_output = process.communicate()[0].decode('utf-8')
     print (compiler_output)
 
+    def readonly_remove(func, path, _):
+        os.chmod(path, stat.S_IWRITE)
+        func(path)
+
     # Move the file to the final location ( Linux )
     if os.path.isfile(output_name):
         os.rename(output_name, final_path)
-        shutil.rmtree('tmp')
+        shutil.rmtree('tmp', onerror=readonly_remove)
         return final_name
 
     # Move the file to the final location ( Windows )
     if os.path.isfile(output_name + '.exe'):
         os.rename(output_name + '.exe', final_path + '.exe')
-        shutil.rmtree('tmp')
+        shutil.rmtree('tmp', onerror=readonly_remove)
         return final_name + '.exe'
 
     # Notify the server if the build failed
