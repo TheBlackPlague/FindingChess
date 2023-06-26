@@ -86,6 +86,31 @@ OPENBENCH_CONFIG = {
             ]
         },
 
+        'WhiteCore' : {
+            'nps': 3500000,
+            'base': 'master',
+            'book': 'UHO_XXL_+0.90_+1.19.epd',
+            'bounds': '[0.00, 5.00]',
+            'source': 'https://github.com/SzilBalazs/WhiteCore',
+
+            'build' : {
+                'path': '',
+                'compilers': ['clang>=16.0.0'],
+                'cpuflags': ['POPCNT']
+            },
+
+            'testmodes' : [
+                { 'id' : 'STC',                'th' : 1, 'hash' :   16, 'tc' : '10.0+0.1' },
+                { 'id' : 'LTC',                'th' : 1, 'hash' :  256, 'tc' : '60.0+0.6' },
+                { 'id' : 'SMP STC',            'th' : 4, 'hash' :   64, 'tc' : '10.0+0.1' },
+                { 'id' : 'SMP LTC',            'th' : 4, 'hash' : 1024, 'tc' : '60.0+0.6' },
+                { 'id' : 'STC Simplification', 'th' : 1, 'hash' :   16, 'tc' : '10.0+0.1', 'bounds' : '[-3.00, 1.00]' },
+                { 'id' : 'LTC Simplification', 'th' : 1, 'hash' :  256, 'tc' : '60.0+0.6', 'bounds' : '[-3.00, 1.00]' },
+                { 'id' : 'STC Progression',    'th' : 1, 'hash' :   16, 'tc' : '10.0+0.1', 'games' : 20000 },
+                { 'id' : 'LTC Progression',    'th' : 1, 'hash' :  256, 'tc' : '60.0+0.6', 'games' : 20000 },
+            ]
+        },
+
         'Mess' : {
 
             'nps'    : 800000,
