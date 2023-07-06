@@ -751,7 +751,7 @@ def clientSubmitError(request):
 
     # Flag the Test as having an error except for time losses
     test = Test.objects.get(id=int(request.POST['testid']))
-    if 'loses on time' not in request.POST['error']:
+    if 'loses on time' not in request.POST['error'] and 'build failed' not in request.POST['error']:
         test.error = True; test.save()
 
     # Log the Error into the Events table
